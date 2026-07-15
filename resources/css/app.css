@@ -1,0 +1,63 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    /* Brand palette — dark navy base, light blue accent */
+    --color-navy-950: #05070f;
+    --color-navy-900: #070b17;
+    --color-navy-800: #0c1220;
+    --color-navy-700: #121a2e;
+    --color-navy-600: #1a2540;
+    --color-navy-500: #24335a;
+
+    --color-accent-100: #dceeff;
+    --color-accent-200: #b8ddff;
+    --color-accent-300: #8ecbff;
+    --color-accent-400: #5cb3ff;
+    --color-accent-500: #3b9dff;
+    --color-accent-600: #2582e6;
+    --color-accent-700: #1b66b8;
+
+    --shadow-glow: 0 0 0 1px rgba(92, 179, 255, 0.15), 0 8px 30px -8px rgba(59, 157, 255, 0.35);
+}
+
+@layer base {
+    html {
+        color-scheme: dark;
+    }
+
+    body {
+        background-color: var(--color-navy-950);
+        color: #e6edf7;
+    }
+
+    ::selection {
+        background-color: var(--color-accent-500);
+        color: var(--color-navy-950);
+    }
+}
+
+@layer components {
+    .glass {
+        background: rgba(18, 26, 46, 0.55);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(140, 180, 255, 0.12);
+    }
+
+    .glow-border {
+        box-shadow: var(--shadow-glow);
+    }
+
+    .text-gradient {
+        background: linear-gradient(90deg, #ffffff 0%, #a9d4ff 60%, #5cb3ff 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+}
