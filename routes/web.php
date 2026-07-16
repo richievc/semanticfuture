@@ -1,18 +1,23 @@
 <?php
 
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\EbooksController;
-use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Account\DashboardController as AccountDashboardController;
 use App\Http\Controllers\Account\DownloadsController;
 use App\Http\Controllers\Account\OrdersController;
+use App\Http\Controllers\Admin\AnalyticsController as AdminAnalyticsController;
+use App\Http\Controllers\Admin\BlogPostsController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\EbooksController;
+use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Auth\LoginController as AuthLoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Admin\AnalyticsController as AdminAnalyticsController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\EbookStoreController;
 use App\Http\Controllers\PayPalWebhookController;
+use App\Models\Ebook;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -24,7 +29,7 @@ Route::get('/features', function () {
 })->name('features');
 
 Route::get('/pricing', function () {
-    $ebook = \App\Models\Ebook::where('slug', config('shop.ebook_slug'))->published()->first();
+    $ebook = Ebook::where('slug', config('shop.ebook_slug'))->published()->first();
 
     return view('pages.pricing', compact('ebook'));
 })->name('pricing');
@@ -37,14 +42,14 @@ Route::get('/contact', function () {
     return view('pages.contact');
 })->name('contact');
 
-Route::post('/contact', function (\Illuminate\Http\Request $request) {
+Route::post('/contact', function (Request $request) {
     $request->validate([
         'name' => ['required', 'string', 'max:120'],
         'email' => ['required', 'email', 'max:180'],
         'message' => ['required', 'string', 'max:2000'],
     ]);
 
-    \Illuminate\Support\Facades\Log::info('Contact form submission', $request->only('name', 'email', 'message'));
+    Log::info('Contact form submission', $request->only('name', 'email', 'message'));
 
     return redirect()->route('contact')->with('success', 'Thanks — your message is in. We\'ll get back to you soon.');
 })->name('contact.submit');
@@ -52,6 +57,9 @@ Route::post('/contact', function (\Illuminate\Http\Request $request) {
 Route::get('/preview', function () {
     return view('pages.preview');
 })->name('preview');
+
+Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+Route::get('/blog/{post:slug}', [BlogController::class, 'show'])->name('blog.show');
 
 /*
 |--------------------------------------------------------------------------
@@ -131,6 +139,10 @@ Route::middleware('guest:admin')->group(function () {
 Route::middleware('admin.auth')->group(function () {
     Route::get('/admin/dashboard', DashboardController::class)->name('admin.dashboard');
     Route::get('/admin/analytics', AdminAnalyticsController::class)->name('admin.analytics');
+    Route::resource('/admin/blog', BlogPostsController::class)
+        ->except('show')
+        ->parameters(['blog' => 'blog'])
+        ->names('admin.blog');
     Route::resource('/admin/ebooks', EbooksController::class)->names('admin.ebooks');
     Route::post('/admin/logout', [LoginController::class, 'logout'])->name('admin.logout');
 });

@@ -3,6 +3,7 @@
         'home' => ['label' => 'Home', 'route' => 'home'],
         'features' => ['label' => 'Features', 'route' => 'features'],
         'pricing' => ['label' => 'Pricing', 'route' => 'pricing'],
+        'blog' => ['label' => 'Blog', 'route' => 'blog.index'],
         'about' => ['label' => 'About', 'route' => 'about'],
         'contact' => ['label' => 'Contact', 'route' => 'contact'],
     ];
@@ -20,7 +21,7 @@
                 @foreach ($navLinks as $key => $link)
                     <a
                         href="{{ route($link['route']) }}"
-                        class="text-sm font-medium transition-colors {{ request()->routeIs($link['route']) ? 'text-accent-300' : 'text-slate-300 hover:text-white' }}"
+                        class="text-sm font-medium transition-colors {{ ($key === 'blog' ? request()->routeIs('blog.*') : request()->routeIs($link['route'])) ? 'text-accent-300' : 'text-slate-300 hover:text-white' }}"
                     >
                         {{ $link['label'] }}
                     </a>
@@ -78,7 +79,7 @@
                 @foreach ($navLinks as $key => $link)
                     <a
                         href="{{ route($link['route']) }}"
-                        class="block rounded-lg px-3 py-2 text-base font-medium {{ request()->routeIs($link['route']) ? 'bg-white/5 text-accent-300' : 'text-slate-300 hover:bg-white/5 hover:text-white' }}"
+                        class="block rounded-lg px-3 py-2 text-base font-medium {{ ($key === 'blog' ? request()->routeIs('blog.*') : request()->routeIs($link['route'])) ? 'bg-white/5 text-accent-300' : 'text-slate-300 hover:bg-white/5 hover:text-white' }}"
                     >
                         {{ $link['label'] }}
                     </a>

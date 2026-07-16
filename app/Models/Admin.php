@@ -27,4 +27,9 @@ class Admin extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function blogPosts()
+    {
+        return $this->hasMany(BlogPost::class);
+    }
 }

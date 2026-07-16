@@ -18,6 +18,7 @@
                     <li><a href="{{ route('home') }}" class="hover:text-accent-300">Home</a></li>
                     <li><a href="{{ route('features') }}" class="hover:text-accent-300">Features</a></li>
                     <li><a href="{{ route('pricing') }}" class="hover:text-accent-300">Pricing</a></li>
+                    <li><a href="{{ route('blog.index') }}" class="hover:text-accent-300">Blog</a></li>
                     <li><a href="{{ route('about') }}" class="hover:text-accent-300">About</a></li>
                     <li><a href="{{ route('contact') }}" class="hover:text-accent-300">Contact</a></li>
                 </ul>

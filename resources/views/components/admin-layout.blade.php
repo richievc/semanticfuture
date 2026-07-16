@@ -39,6 +39,11 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{ route('admin.blog.index') }}" class="nav-link {{ $active === 'blog' ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-pen"></i><p>Blog Posts</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{ route('admin.analytics') }}" class="nav-link {{ $active === 'analytics' ? 'active' : '' }}">
                             <i class="nav-icon fas fa-chart-line"></i><p>Analytics</p>
                         </a>
