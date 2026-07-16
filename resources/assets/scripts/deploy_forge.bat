@@ -1,9 +1,9 @@
 @echo off
 setlocal EnableExtensions EnableDelayedExpansion
 
-set "SITE_DOMAIN=semfut.com"
+set "SITE_DOMAIN=samfut.com"
 set "SERVER_IP=50.116.57.251"
-set "SITE_PATH=/home/forge/semfut.com/current"
+set "SITE_PATH=/home/forge/samfut.com"
 set "SSH_KEY=%USERPROFILE%\.ssh\id_ed25519"
 set "FROM_HOOK=%~1"
 set "DRY_RUN=0"
@@ -11,7 +11,7 @@ set "DRY_RUN=0"
 if /I "%~1"=="--dry-run" set "DRY_RUN=1"
 
 echo =====================================
-echo   Deploy semfut.com to Laravel Forge
+echo   Deploy samfut.com to Laravel Forge
 echo =====================================
 echo.
 

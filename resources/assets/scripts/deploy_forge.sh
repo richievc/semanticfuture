@@ -2,8 +2,8 @@
 
 set -Eeuo pipefail
 
-SITE_DOMAIN="${SITE_DOMAIN:-semfut.com}"
-SITE_PATH="${SITE_PATH:-/home/forge/semfut.com/current}"
+SITE_DOMAIN="${SITE_DOMAIN:-samfut.com}"
+SITE_PATH="${SITE_PATH:-/home/forge/samfut.com}"
 DEPLOY_BRANCH="${DEPLOY_BRANCH:-main}"
 
 if [[ -L "$SITE_PATH" ]]; then
