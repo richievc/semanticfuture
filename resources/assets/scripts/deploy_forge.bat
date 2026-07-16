@@ -4,7 +4,7 @@ setlocal EnableExtensions EnableDelayedExpansion
 set "SITE_DOMAIN=samfut.com"
 set "SERVER_IP=50.116.57.251"
 set "SITE_PATH=/home/forge/samfut.com"
-set "SSH_KEY=%USERPROFILE%\.ssh\id_ed25519"
+set "SSH_KEY=%SAMFUT_SSH_KEY%"
 set "FROM_HOOK=%~1"
 set "DRY_RUN=0"
 
@@ -93,17 +93,23 @@ if not errorlevel 1 (
     echo.
 )
 
-if not exist "%SSH_KEY%" (
-    echo [WARN] SSH key not found: %SSH_KEY%
-    goto :manual
+if defined SSH_KEY (
+    if not exist "!SSH_KEY!" (
+        echo [WARN] SAMFUT_SSH_KEY does not exist: !SSH_KEY!
+        goto :manual
+    )
 )
 
 echo Attempting SSH deployment...
-echo Key: %SSH_KEY%
+if defined SSH_KEY (echo Key: !SSH_KEY!) else (echo Key: SSH agent/default identity)
 echo Server: forge@%SERVER_IP%
 echo.
 
-ssh -i "%SSH_KEY%" forge@%SERVER_IP% "cd %SITE_PATH% && bash resources/assets/scripts/deploy_forge.sh"
+if defined SSH_KEY (
+    ssh -i "!SSH_KEY!" forge@%SERVER_IP% "cd %SITE_PATH% && bash resources/assets/scripts/deploy_forge.sh"
+) else (
+    ssh forge@%SERVER_IP% "cd %SITE_PATH% && bash resources/assets/scripts/deploy_forge.sh"
+)
 set "SSH_EXIT=!ERRORLEVEL!"
 
 if "!SSH_EXIT!"=="0" goto :success
@@ -124,7 +130,7 @@ echo   2. Select %SITE_DOMAIN%
 echo   3. Click Deploy Now
 echo.
 echo If this is a standard, non-zero-downtime site, you may inspect it over SSH:
-echo   ssh -i "%SSH_KEY%" forge@%SERVER_IP%
+echo   ssh forge@%SERVER_IP%
 echo   cd %SITE_PATH%
 echo   bash resources/assets/scripts/deploy_forge.sh
 echo.
