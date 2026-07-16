@@ -24,7 +24,7 @@
 <div class="form-group">
     <label for="body">Article body</label>
     <textarea id="body" name="body" class="form-control" rows="18" required>{{ old('body', $post?->body) }}</textarea>
-    <small class="form-text text-muted">Plain text is rendered safely with line breaks preserved.</small>
+    <small class="form-text text-muted">Markdown is supported for headings, lists, links, emphasis, and quotes. Raw HTML is removed.</small>
 </div>
 <div class="form-group">
     <label for="meta_description">SEO description</label>

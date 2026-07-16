@@ -76,4 +76,21 @@ class BlogTest extends TestCase
         $this->get(route('admin.blog.index'))->assertRedirect(route('admin.login'));
         $this->get(route('admin.blog.create'))->assertRedirect(route('admin.login'));
     }
+
+    public function test_blog_body_renders_safe_markdown(): void
+    {
+        $post = BlogPost::create([
+            'title' => 'Structured Article',
+            'slug' => 'structured-article',
+            'body' => "## Clear heading\n\n- First point\n\n<script>alert('no')</script>",
+            'is_published' => true,
+            'published_at' => now()->subMinute(),
+        ]);
+
+        $this->get(route('blog.show', $post))
+            ->assertOk()
+            ->assertSee('<h2>Clear heading</h2>', false)
+            ->assertSee('<li>First point</li>', false)
+            ->assertDontSee('<script>', false);
+    }
 }

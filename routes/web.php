@@ -61,6 +61,10 @@ Route::get('/preview', function () {
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{post:slug}', [BlogController::class, 'show'])->name('blog.show');
 
+Route::get('/admin', function () {
+    return redirect()->route(auth('admin')->check() ? 'admin.dashboard' : 'admin.login');
+})->name('admin.index');
+
 /*
 |--------------------------------------------------------------------------
 | Purchase flow

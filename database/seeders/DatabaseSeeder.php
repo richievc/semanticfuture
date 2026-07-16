@@ -32,6 +32,8 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password123'),
         ]);
 
+        $this->call(BlogPostSeeder::class);
+
         Ebook::updateOrCreate(
             ['slug' => config('shop.ebook_slug')],
             [

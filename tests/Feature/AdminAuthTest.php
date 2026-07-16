@@ -19,6 +19,24 @@ class AdminAuthTest extends TestCase
         $response->assertRedirect('/admin/login');
     }
 
+    public function test_admin_entry_redirects_guests_to_login(): void
+    {
+        $this->get('/admin')->assertRedirect('/admin/login');
+    }
+
+    public function test_admin_entry_redirects_authenticated_admins_to_dashboard(): void
+    {
+        $admin = Admin::create([
+            'name' => 'Administrator',
+            'email' => 'admin@example.com',
+            'password' => Hash::make('password123'),
+        ]);
+
+        $this->actingAs($admin, 'admin')
+            ->get('/admin')
+            ->assertRedirect('/admin/dashboard');
+    }
+
     public function test_admin_can_login_and_access_the_dashboard(): void
     {
         $admin = Admin::create([

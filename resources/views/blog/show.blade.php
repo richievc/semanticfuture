@@ -17,8 +17,17 @@
             <img src="{{ $post->imageUrl() }}" alt="" class="mt-10 aspect-[16/9] w-full rounded-2xl border border-white/10 object-cover">
         @endif
 
-        <div class="mt-12 text-base leading-8 text-slate-300 [&_a]:text-accent-300 [&_a]:underline">
-            {!! nl2br(e($post->body)) !!}
+        <div class="mt-12 text-base leading-8 text-slate-300
+            [&_h2]:mb-4 [&_h2]:mt-12 [&_h2]:text-3xl [&_h2]:font-bold [&_h2]:tracking-tight [&_h2]:text-white
+            [&_h3]:mb-3 [&_h3]:mt-8 [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:text-white
+            [&_p]:my-5
+            [&_ul]:my-6 [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-6
+            [&_ol]:my-6 [&_ol]:list-decimal [&_ol]:space-y-2 [&_ol]:pl-6
+            [&_strong]:font-semibold [&_strong]:text-white
+            [&_blockquote]:my-8 [&_blockquote]:border-l-4 [&_blockquote]:border-accent-400 [&_blockquote]:pl-6 [&_blockquote]:text-xl [&_blockquote]:italic [&_blockquote]:text-slate-200
+            [&_hr]:my-10 [&_hr]:border-white/10
+            [&_a]:text-accent-300 [&_a]:underline [&_a]:decoration-accent-300/40 [&_a]:underline-offset-4 hover:[&_a]:text-accent-200">
+            {!! $post->bodyHtml() !!}
         </div>
     </article>
 </x-layout>

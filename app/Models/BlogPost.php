@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class BlogPost extends Model
 {
@@ -49,5 +50,13 @@ class BlogPost extends Model
         return $this->featured_image
             ? Storage::disk('public')->url($this->featured_image)
             : null;
+    }
+
+    public function bodyHtml(): string
+    {
+        return Str::markdown($this->body, [
+            'html_input' => 'strip',
+            'allow_unsafe_links' => false,
+        ]);
     }
 }
