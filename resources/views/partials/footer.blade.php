@@ -35,7 +35,10 @@
 
         <div class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/5 pt-8 sm:flex-row">
             <p class="text-xs text-slate-500">&copy; {{ date('Y') }} SemanticFuture. All rights reserved.</p>
-            <p class="text-xs text-slate-500">Built for creators preparing for Google's evolving search ecosystem.</p>
+            <nav aria-label="Legal" class="flex items-center gap-5 text-xs text-slate-500">
+                <a href="{{ route('terms') }}" class="hover:text-accent-300">Terms &amp; Conditions</a>
+                <a href="{{ route('privacy') }}" class="hover:text-accent-300">Privacy Policy</a>
+            </nav>
         </div>
     </div>
 </footer>

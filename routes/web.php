@@ -42,6 +42,9 @@ Route::get('/contact', function () {
     return view('pages.contact');
 })->name('contact');
 
+Route::view('/terms', 'pages.terms')->name('terms');
+Route::view('/privacy', 'pages.privacy')->name('privacy');
+
 Route::post('/contact', function (Request $request) {
     $request->validate([
         'name' => ['required', 'string', 'max:120'],
